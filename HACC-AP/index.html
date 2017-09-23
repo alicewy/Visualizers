@@ -130,7 +130,7 @@ function mkchart(
   var names = canv.selectAll("text."+prefix+"name").data(data).enter().append("text")
       .attr("class",prefix+"name")
       .attr("fill",function(d){return d.clr;})
-      .attr("x",orig_cx+radius+50).attr("y",function(d,i){return orig_cy-radius*0.9+i*20;})
+      .attr("x",orig_cx+radius+50).attr("y",function(d,i){return orig_cy-radius*1.1+i*20;})
       .text(function(d){return d.name;});
   var title = canv.selectAll("text."+prefix+"title").data(["title"]).enter().append("text")
       .attr("class",prefix+"title")
