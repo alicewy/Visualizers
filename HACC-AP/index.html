@@ -73,6 +73,13 @@
           <!-- charts will go here -->
           <svg id="canvas" width="1000" height="1000">
           </svg>
+		  
+		  <div style="float:right; width: 40%; margin-top: 100px;">
+		  <p>How much electricity do you use per day?</p>
+		<input id="electricity">
+
+		<button type="button" onclick="updateValue()">Submit</button>
+		</div>
         </main>
       </div>
     </div>
@@ -267,6 +274,37 @@ function loadData(c_indx,c_intv,filepath){
   );
 }
 
+function loadDataUpdate(c_indx,c_intv,filepath,update){
+  d3.csv(filepath,
+    function(error,data){
+      if(error) throw error;
+
+      var title = Object.keys(data[0])[0];
+      var items = data.map(function(d){ return Object.values(d)[0];});
+      console.log(items);
+      var datalist = [];
+      for(i = 0; i < Object.keys(data[0]).length-1; i++){
+        var data_temp = { name : "", clr : "", list : []};
+        data_temp.name = Object.keys(data[0])[i+1];
+        data_temp.clr = hsv2code((c_indx+(i-items.length/2)*c_intv+360)%360,100,80);
+        data_temp.list = data.map(function(d){ return Object.values(d)[i+1];});
+        console.log(data_temp);
+		var numUpdate = parseInt(data_temp.list[3]) + parseInt(update);
+		data_temp.list[3] = numUpdate.toString();
+		console.log(data_temp.list[3]);
+        datalist =  datalist.concat(data_temp);
+      }
+
+      var clrs = {
+        back : hsv2code((c_indx)%360,80,45),
+        line : hsv2code((c_indx)%360,70,60),
+        text : hsv2code((c_indx)%360,70,60)
+      };
+      mkchart(canv,items,datalist,title,300,300,200,0,clrs);
+    }
+  );
+}
+
 function selectButton(indx){
   var btn_energy = d3.select("#btn_energy").attr("class","nav-link");
   var spn_energy = d3.select("#spn_energy").text("");
@@ -307,6 +345,17 @@ function go2energy(){
   loadData(c_indx,c_intv,filepath);
 
 }
+function go2energyUpdate(update){
+  selectButton("energy");
+  canv.selectAll("*").remove();
+
+  var c_indx = 240;
+  var c_intv = 40;
+  var filepath  ="/data/energy.csv";
+
+  loadDataUpdate(c_indx,c_intv,filepath,update);
+
+}
 
 function go2waste(){
   selectButton("waste");
@@ -344,15 +393,27 @@ function go2nature(){
 }
 
 
+function updateValue(){
+	var electricValue = document.getElementById("electricity").value;
+	if(electricValue != ""){
+		go2energyUpdate(electricValue);
+	}else{
+		go2energy();
+	}
+}
 //============================================
 //======== START =============================
 //============================================
 
 // adjust the area to draw charts
 var canv = d3.select("#canvas");
-canv.attr("width",2000).attr("height",5000);
+canv.attr("width",600).attr("height",600);
+
+
 
 // show the default charts
 go2energy();
+
+
 
 </script>
