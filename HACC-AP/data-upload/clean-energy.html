@@ -76,15 +76,16 @@
 
           <h1>Clean Energy</h1>
 
-          <svg id="progE"></svg>
+          <svg id="progE">
+            $("#progE").Progress({
+              percent: 20, // 20%
+            });
+          </svg>
 
 
           <script language="JavaScript">
-            $("#container").Progress({
-              percent: 20, // 20%
-            });
 
-            $("#container").Progress({
+            $("#progE").Progress({
 
               // width & height of the progress bar
               width: 90,
@@ -115,7 +116,7 @@
   
             });
 
-            var progress = $("#container").Progress({
+            var progress = $("#progE").Progress({
               percent: 20, // 20%
             });
 
