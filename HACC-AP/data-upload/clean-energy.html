@@ -16,6 +16,10 @@
     
     <link href="/resource/css/dashboard.css" rel="stylesheet">
 
+    <script src="//code.jquery.com/jquery-latest.min.js"></script>
+    <script src="jquery.progress.js"></script>
+
+
     <style>
       .page {
         overflow: auto;
@@ -71,6 +75,57 @@
         <main class="col-sm-9 ml-sm-auto col-md-10 pt-3" role="main">
 
           <h1>Clean Energy</h1>
+
+          <svg id="progE"></svg>
+
+
+          <script language="JavaScript">
+            $("#container").Progress({
+              percent: 20, // 20%
+            });
+
+            $("#container").Progress({
+
+              // width & height of the progress bar
+              width: 90,
+              height: 20, 
+
+              // percent value
+              percent: 0, 
+
+              // background color of the progress bar
+              backgroundColor: '#555',
+
+              // fill color of the progress bar
+              barColor: '#d9534f', 
+
+              // text color
+              fontColor: '#fff', 
+
+              // border radius
+              radius: 4,
+
+              // font size
+              fontSize: 12,
+
+              // animation options
+              increaseTime: 1000.00/60.00, 
+              increaseSpeed: 1, 
+              animate: true
+  
+            });
+
+            var progress = $("#container").Progress({
+              percent: 20, // 20%
+            });
+
+            // set the percent value
+            progress.percent(90);
+
+
+
+          </script>
+
               <div class="form-group row">
                 <label for="example-text-input" class="col-2 col-form-label"> How many gallons of gas has your car consumed this past month? </label>
                 <div class="col-10">
